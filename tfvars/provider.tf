@@ -1,3 +1,4 @@
+# Here we are not approaching terraform workspace but controlling the workspace using tfvars....
 terraform {
   required_providers {
     aws = {
@@ -5,6 +6,11 @@ terraform {
       version = "6.33.0" # TERRAFORM AWS Provider Version
     }
   }
+
+  backend  "s3" {
+
+  }
+  
 }
 
 provider "aws" {

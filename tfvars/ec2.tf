@@ -1,17 +1,17 @@
 resource "aws_instance" "example" {
   ami           = "ami-0220d79f3f480ecf5"
-  instance_type = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.allow_tls.id] # Dependent on aws_security_group creaion(Dependency Management)
+  instance_type = var.instance_type
+  vpc_security_group_ids = [aws_security_group.allow_tls.id] # Dependent on aws_security_group creation(Dependency Management)
 
   tags = {
-    Name = "terraform-state-demo"
+    Name = "terraform-state-demo-${var.environment}" # Create env folder as per requirement...
     Project = "roboshop"
   }
 }
 
 # Creation of security group
 resource "aws_security_group" "allow_tls" {
-  name        = "allow-all-terraform" # this is for AWS account  # "allow tls" is for terraform reference
+  name        = "allow-all-terraform-${var.environment}" # this is for AWS account  # "allow tls" is for terraform reference
   description = "Allow TLS inbound traffic and all outbound traffic"
 
   egress {
@@ -31,6 +31,6 @@ resource "aws_security_group" "allow_tls" {
   }
 
   tags = {
-    Name = "allow-all-terraform"
+    Name = "allow-all-terraform-${var.environment}"
   }
 }
